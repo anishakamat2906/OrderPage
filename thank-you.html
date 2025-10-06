@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank you — FruveFresh</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial;margin:0;background:#f7fafc;color:#042028}
+    .wrap{max-width:820px;margin:48px auto;padding:24px}
+    .card{background:#fff;padding:28px;border-radius:10px;box-shadow:0 6px 20px rgba(2,6,23,0.06)}
+    h1{margin:0 0 8px;color:#0f766e}
+    p.lead{color:#334155}
+    .next{margin-top:16px;background:#ecfdf5;border:1px solid #bbf7d0;padding:12px;border-radius:8px;color:#064e3b}
+    a.btn{display:inline-block;margin-top:14px;padding:10px 14px;background:#0f766e;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main">
+      <h1>Thanks — we’ve received your request</h1>
+      <p class="lead">Our team will review your requirements and contact you within 2–3 hours with a quotation and secure payment instructions. We look forward to helping you keep produce fresher for longer.</p>
+
+      <div class="next">
+        <strong>Need faster assistance?</strong> Call us at <a href="tel:+918851900865">+91-8851900865</a> or email <a href="mailto:fruvetech@gmail.com">fruvetech@gmail.com</a>.
+      </div>
+
+      <a class="btn" href="https://drive.google.com/file/d/1tmNDNuyG8qDIgqnejemvfYdo0G740z3R/view?usp=sharing" target="_blank" rel="noopener">Download product brochure</a>
+      <a class="btn" href="https://www.fruvetech.com/#" style="background:#f59e0b;margin-left:10px">Contact support</a>
+
+      <p style="margin-top:14px;color:#6b7280;font-size:13px">Reference ID: FRV-<span id="refid-placeholder">xxxxx</span></p>
+    </div>
+  </div>
+
+  <script>
+    // set small reference id (optional)
+    document.getElementById('refid-placeholder').textContent = Date.now().toString().slice(-6);
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Order FruveFresh Sachets — Inquiry</title>
+  <style>
+    :root{--bg:#f7fafc;--card:#fff;--accent:#0f766e;--muted:#6b7280;--danger:#b91c1c;--radius:10px;font-family:Inter,system-ui,Arial;}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#0f172a;line-height:1.45}
+    .container{max-width:980px;margin:32px auto;padding:20px}
+    .card{background:var(--card);border-radius:var(--radius);padding:26px;box-shadow:0 6px 20px rgba(2,6,23,0.06)}
+    h1{margin:0 0 6px;font-size:20px}
+    p.lead{margin:0 0 18px;color:var(--muted);font-size:14px}
+    .section-heading{font-weight:800;margin-top:18px;margin-bottom:8px;color:#07323a}
+    .row{display:flex;gap:12px}
+    .col{flex:1;min-width:0}
+    label{display:block;font-weight:700;margin-bottom:6px;font-size:13px;color:#071428}
+    input,select,textarea{width:100%;padding:11px;border:1px solid #e6edf3;border-radius:8px;font-size:14px}
+    textarea{min-height:88px;resize:vertical}
+    .muted{color:var(--muted);font-size:13px;margin-top:6px}
+    .radio-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+    .radio-card{border:1px solid #eef2f6;padding:12px;border-radius:8px;min-width:180px;display:flex;gap:10px;align-items:flex-start;background:#fff;cursor:pointer}
+    .helper{font-size:13px;color:var(--muted);margin-top:4px}
+    .small{font-size:12px;color:var(--muted);margin-top:6px}
+    .cta-row{display:flex;gap:12px;align-items:center;margin-top:16px}
+    button.primary{background:var(--accent);color:#fff;border:none;padding:11px 18px;border-radius:8px;cursor:pointer;font-weight:700}
+    button.secondary{background:transparent;border:1px solid #e6edf3;padding:10px;border-radius:8px;cursor:pointer}
+    .checkbox{display:flex;gap:10px;align-items:center;margin-top:14px}
+    .response{margin-top:14px;padding:14px;border-radius:8px;background:#ecfdf5;border:1px solid #bbf7d0;color:#064e3b;display:none}
+    .error{color:var(--danger);font-size:13px;margin-top:6px;display:none}
+    @media (max-width:720px){.row{flex-direction:column}.radio-card{min-width:100%}}
+    input:focus,textarea:focus,select:focus,button:focus{outline:3px solid rgba(15,118,110,0.12);outline-offset:2px}
+    .star { color: #f59e0b; font-weight:900; margin-right:6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Order FruveFresh Sachets — Inquiry / Pre-order</h1>
+      <p class="lead">Tell us what you need — we’ll review your request, share a quotation, and guide you through secure payment. To confirm the order, a 50% advance is required.</p>
+
+      <form id="orderForm" novalidate>
+        <div class="row">
+          <div class="col">
+            <label for="fullName">Full name <span style="color:var(--danger)">*</span></label>
+            <input id="fullName" name="fullName" type="text" placeholder="e.g., Anil Kamat" required>
+            <div id="err-name" class="error">Please provide your full name.</div>
+          </div>
+          <div class="col">
+            <label for="phone">Phone number <span style="color:var(--danger)">*</span></label>
+            <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" required pattern="^\+?\d[\d\s-]{6,}$">
+            <div id="err-phone" class="error">Please enter a valid phone number.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label for="email">Email address <span style="color:var(--danger)">*</span></label>
+          <input id="email" name="email" type="email" placeholder="e.g., anil.kamat@example.com" required>
+          <div id="err-email" class="error">Please enter a valid email address.</div>
+        </div>
+<div style="margin-top:12px;">
+  <label for="company">Company name (if applicable)</label>
+  <input id="company" name="company" type="text" placeholder="e.g., FruveTech Pvt. Ltd.">
+  <div class="small">Enter your organization or company name (optional).</div>
+</div>
+        <div style="margin-top:12px;">
+          <label for="address">Delivery address <span style="color:var(--danger)">*</span></label>
+          <textarea id="address" name="address" rows="3" required></textarea>
+          <div id="err-address" class="error">Please enter the delivery address.</div>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <div class="col">
+            <label for="sachetQty">Quantity required (number of sachets) <span style="color:var(--danger)">*</span></label>
+            <input id="sachetQty" name="sachetQty" type="number" min="1" step="1" placeholder="e.g., 50" required>
+            <div id="err-qty" class="error">Please specify the quantity required.</div>
+          </div>
+          <div class="col">
+            <label for="produceType">Produce type <span style="color:var(--danger)">*</span></label>
+            <select id="produceType" name="produceType" required>
+              <option value="" selected disabled>— Select produce —</option>
+              <option value="Mango">Mango</option>
+              <option value="Banana">Banana</option>
+              <option value="Guava">Guava</option>
+              <option value="Grapes">Grapes</option>
+              <option value="Papaya">Papaya</option>
+              <option value="Tomato">Tomato</option>
+              <option value="Other">Other</option>
+            </select>
+            <div id="err-produce" class="error">Please select a produce type.</div>
+          </div>
+        </div>
+
+        <div id="otherProduceWrap" style="display:none;margin-top:12px;">
+          <label for="otherProduce">If Other, please specify</label>
+          <input id="otherProduce" name="otherProduce" type="text" placeholder="Specify produce (e.g., Custard apple)">
+        </div>
+
+        <fieldset aria-describedby="sachetHint" style="margin-top:14px;">
+          <legend>Recommended sachet size <span style="color:var(--danger)">*</span></legend>
+          <p id="sachetHint" class="muted">Choose the sachet size that best matches your pack. If you are unsure, select <strong>Medium — 5 kg</strong>.</p>
+
+          <div class="radio-row">
+            <label class="radio-card" for="sizeSmall">
+              <input id="sizeSmall" name="sachetSize" type="radio" value="small" required>
+              <div>
+                <div style="font-weight:700"><span class="star">★</span>Small — 2–3 kg</div>
+                <div class="helper">Our most popular sachet — ideal for retail and small packs.</div>
+              </div>
+            </label>
+
+            <label class="radio-card" for="sizeMedium">
+              <input id="sizeMedium" name="sachetSize" type="radio" value="medium">
+              <div>
+                <div style="font-weight:700">Medium — 5 kg</div>
+                <div class="helper">Standard option for crates and cartons (recommended).</div>
+              </div>
+            </label>
+
+            <label class="radio-card" for="sizeCustom">
+              <input id="sizeCustom" name="sachetSize" type="radio" value="custom">
+              <div>
+                <div style="font-weight:700">Custom</div>
+                <div class="helper">Specify bespoke requirements; our team will advise.</div>
+              </div>
+            </label>
+          </div>
+          <div id="err-sachet" class="error">Please choose a sachet size.</div>
+        </fieldset>
+
+        <div id="customSachetWrap" style="display:none;margin-top:8px;">
+          <label for="customSachet">Custom sachet specification</label>
+          <input id="customSachet" name="customSachet" type="text" placeholder="e.g., 7 kg sachet, alternative material, notes">
+        </div>
+
+        <!-- Additional details -->
+        <div class="section-heading">Additional details</div>
+        <p class="muted">The placeholders below help us prepare the right sachet configuration for your requirement.</p>
+
+        <div style="margin-top:10px;">
+          <label for="produceWeight">Approx. produce weight to be preserved (kg) <span style="color:var(--danger)">*</span></label>
+          <input id="produceWeight" name="produceWeight" type="number" min="1" step="1" placeholder="e.g., 200" required>
+          <div class="small">Total weight of produce you intend to preserve (in kg).</div>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <div class="col">
+            <label for="usageDate">Expected usage date</label>
+            <input id="usageDate" name="usageDate" type="date" min="">
+          </div>
+          <div class="col">
+            <label for="notes">Additional notes</label>
+            <textarea id="notes" name="notes" placeholder="e.g., For mango shipment to Mumbai; estimated transit 3 days."></textarea>
+          </div>
+        </div>
+
+        <div class="checkbox">
+          <input id="terms" name="terms" type="checkbox" required>
+          <label for="terms" style="font-weight:700">I confirm that a 50% advance payment will be made to secure the order.</label>
+        </div>
+        <div id="err-terms" class="error">You must acknowledge the payment requirement to proceed.</div>
+
+        <div class="cta-row">
+          <button type="submit" class="primary">Submit order request</button>
+          <button type="button" class="secondary" id="resetBtn">Reset</button>
+        </div>
+
+        <div id="response" class="response"></div>
+      </form>
+
+      <div style="margin-top:14px;font-size:13px;color:var(--muted)">
+        <strong>Need assistance?</strong> Please call +91-8851900865 or email fruvetech@gmail.com
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const produceType=document.getElementById('produceType');
+      const otherProduceWrap=document.getElementById('otherProduceWrap');
+      const orderForm=document.getElementById('orderForm');
+      const sizeRadios=document.getElementsByName('sachetSize');
+      const customWrap=document.getElementById('customSachetWrap');
+      const usageDate=document.getElementById('usageDate');
+      const response=document.getElementById('response');
+      const resetBtn=document.getElementById('resetBtn');
+      const today=new Date().toISOString().split('T')[0];
+      usageDate.setAttribute('min',today);
+
+      produceType.addEventListener('change',()=>{otherProduceWrap.style.display=produceType.value==='Other'?'block':'none';});
+      function onSachetChange(){const s=[...sizeRadios].find(r=>r.checked);customWrap.style.display=s&&s.value==='custom'?'block':'none';}
+      [...sizeRadios].forEach(r=>r.addEventListener('change',onSachetChange));
+      function showError(id,show,msg){const el=document.getElementById(id);if(!el)return;el.style.display=show?'block':'none';if(msg)el.textContent=msg;}
+
+      orderForm.addEventListener('submit',e=>{
+        e.preventDefault();
+        ['err-name','err-phone','err-email','err-address','err-qty','err-produce','err-sachet','err-terms'].forEach(id=>showError(id,false));
+        let valid=true;
+        const name=document.getElementById('fullName').value.trim();
+        const phone=document.getElementById('phone').value.trim();
+        const email=document.getElementById('email').value.trim();
+        const address=document.getElementById('address').value.trim();
+        const qty=+document.getElementById('sachetQty').value;
+        const produce=produceType.value;
+        const sachet=[...sizeRadios].find(r=>r.checked);
+        const terms=document.getElementById('terms').checked;
+        if(!name){showError('err-name',true);valid=false;}
+        if(!phone||!/^\+?\d[\d\s-]{6,}$/.test(phone)){showError('err-phone',true);valid=false;}
+        if(!email||!/^\S+@\S+\.\S+$/.test(email)){showError('err-email',true);valid=false;}
+        if(!address){showError('err-address',true);valid=false;}
+        if(!qty){showError('err-qty',true);valid=false;}
+        if(!produce){showError('err-produce',true);valid=false;}
+        if(!sachet){showError('err-sachet',true);valid=false;}
+        if(!terms){showError('err-terms',true);valid=false;}
+        if(!valid)return;
+        response.style.display='block';
+        response.innerHTML="<p><strong>Thank you. Your request has been received.</strong></p><p class='muted'>We will contact you within 24–48 hours with a quotation and payment details.</p>";
+        setTimeout(()=>window.location.href='thank-you.html',1400);
+      });
+
+      resetBtn.addEventListener('click',()=>{orderForm.reset();otherProduceWrap.style.display='none';customWrap.style.display='none';response.style.display='none';});
+    })();
+  </script>
+</body>
+</html>
