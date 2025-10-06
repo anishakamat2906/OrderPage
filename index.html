@@ -55,7 +55,7 @@
         </div>
 
         <div style="margin-top:12px;">
-          <label for="email">Email address <span style="color:var(--danger)">*</span></label>
+          <label for="email">Email address</label>
           <input id="email" name="email" type="email" placeholder="e.g., anil.kamat@example.com" required>
           <div id="err-email" class="error">Please enter a valid email address.</div>
         </div>
@@ -76,79 +76,9 @@
             <input id="sachetQty" name="sachetQty" type="number" min="1" step="1" placeholder="e.g., 50" required>
             <div id="err-qty" class="error">Please specify the quantity required.</div>
           </div>
-          <div class="col">
-            <label for="produceType">Produce type <span style="color:var(--danger)">*</span></label>
-            <select id="produceType" name="produceType" required>
-              <option value="" selected disabled>— Select produce —</option>
-              <option value="Mango">Mango</option>
-              <option value="Banana">Banana</option>
-              <option value="Guava">Guava</option>
-              <option value="Grapes">Grapes</option>
-              <option value="Papaya">Papaya</option>
-              <option value="Tomato">Tomato</option>
-              <option value="Other">Other</option>
-            </select>
-            <div id="err-produce" class="error">Please select a produce type.</div>
-          </div>
+         
         </div>
 
-        <div id="otherProduceWrap" style="display:none;margin-top:12px;">
-          <label for="otherProduce">If Other, please specify</label>
-          <input id="otherProduce" name="otherProduce" type="text" placeholder="Specify produce (e.g., Custard apple)">
-        </div>
-
-        <fieldset aria-describedby="sachetHint" style="margin-top:14px;">
-          <legend>Recommended sachet size <span style="color:var(--danger)">*</span></legend>
-          <p id="sachetHint" class="muted">Choose the sachet size that best matches your pack. If you are unsure, select <strong>Medium — 5 kg</strong>.</p>
-
-          <div class="radio-row">
-            <label class="radio-card" for="sizeSmall">
-              <input id="sizeSmall" name="sachetSize" type="radio" value="small" required>
-              <div>
-                <div style="font-weight:700"><span class="star">★</span>Small — 2–3 kg</div>
-                <div class="helper">Our most popular sachet — ideal for retail and small packs.</div>
-              </div>
-            </label>
-
-            <label class="radio-card" for="sizeMedium">
-              <input id="sizeMedium" name="sachetSize" type="radio" value="medium">
-              <div>
-                <div style="font-weight:700">Medium — 5 kg</div>
-                <div class="helper">Standard option for crates and cartons (recommended).</div>
-              </div>
-            </label>
-
-            <label class="radio-card" for="sizeCustom">
-              <input id="sizeCustom" name="sachetSize" type="radio" value="custom">
-              <div>
-                <div style="font-weight:700">Custom</div>
-                <div class="helper">Specify bespoke requirements; our team will advise.</div>
-              </div>
-            </label>
-          </div>
-          <div id="err-sachet" class="error">Please choose a sachet size.</div>
-        </fieldset>
-
-        <div id="customSachetWrap" style="display:none;margin-top:8px;">
-          <label for="customSachet">Custom sachet specification</label>
-          <input id="customSachet" name="customSachet" type="text" placeholder="e.g., 7 kg sachet, alternative material, notes">
-        </div>
-
-        <!-- Additional details -->
-        <div class="section-heading">Additional details</div>
-        <p class="muted">The placeholders below help us prepare the right sachet configuration for your requirement.</p>
-
-        <div style="margin-top:10px;">
-          <label for="produceWeight">Approx. produce weight to be preserved (kg) <span style="color:var(--danger)">*</span></label>
-          <input id="produceWeight" name="produceWeight" type="number" min="1" step="1" placeholder="e.g., 200" required>
-          <div class="small">Total weight of produce you intend to preserve (in kg).</div>
-        </div>
-
-        <div class="row" style="margin-top:12px;">
-          <div class="col">
-            <label for="usageDate">Expected usage date</label>
-            <input id="usageDate" name="usageDate" type="date" min="">
-          </div>
           <div class="col">
             <label for="notes">Additional notes</label>
             <textarea id="notes" name="notes" placeholder="e.g., For mango shipment to Mumbai; estimated transit 3 days."></textarea>
@@ -224,3 +154,4 @@
   </script>
 </body>
 </html>
+
