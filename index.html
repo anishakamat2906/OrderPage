@@ -19,8 +19,6 @@
     input,select,textarea{width:100%;padding:11px;border:1px solid #e6edf3;border-radius:8px;font-size:14px}
     textarea{min-height:88px;resize:vertical}
     .muted{color:var(--muted);font-size:13px;margin-top:6px}
-    .radio-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .radio-card{border:1px solid #eef2f6;padding:12px;border-radius:8px;min-width:180px;display:flex;gap:10px;align-items:flex-start;background:#fff;cursor:pointer}
     .helper{font-size:13px;color:var(--muted);margin-top:4px}
     .small{font-size:12px;color:var(--muted);margin-top:6px}
     .cta-row{display:flex;gap:12px;align-items:center;margin-top:16px}
@@ -29,9 +27,8 @@
     .checkbox{display:flex;gap:10px;align-items:center;margin-top:14px}
     .response{margin-top:14px;padding:14px;border-radius:8px;background:#ecfdf5;border:1px solid #bbf7d0;color:#064e3b;display:none}
     .error{color:var(--danger);font-size:13px;margin-top:6px;display:none}
-    @media (max-width:720px){.row{flex-direction:column}.radio-card{min-width:100%}}
+    @media (max-width:720px){.row{flex-direction:column}}
     input:focus,textarea:focus,select:focus,button:focus{outline:3px solid rgba(15,118,110,0.12);outline-offset:2px}
-    .star { color: #f59e0b; font-weight:900; margin-right:6px; }
   </style>
 </head>
 <body>
@@ -41,12 +38,14 @@
       <p class="lead">Tell us what you need — we’ll review your request, share a quotation, and guide you through secure payment. To confirm the order, a 50% advance is required.</p>
 
       <form id="orderForm" novalidate>
+        <!-- Contact row -->
         <div class="row">
           <div class="col">
             <label for="fullName">Full name <span style="color:var(--danger)">*</span></label>
             <input id="fullName" name="fullName" type="text" placeholder="e.g., Anil Kamat" required>
             <div id="err-name" class="error">Please provide your full name.</div>
           </div>
+
           <div class="col">
             <label for="phone">Phone number <span style="color:var(--danger)">*</span></label>
             <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" required pattern="^\+?\d[\d\s-]{6,}$">
@@ -54,30 +53,34 @@
           </div>
         </div>
 
+        <!-- Email + Company -->
         <div style="margin-top:12px;">
-          <label for="email">Email address</label>
+          <label for="email">Email address <span style="color:var(--danger)">*</span></label>
           <input id="email" name="email" type="email" placeholder="e.g., anil.kamat@example.com" required>
           <div id="err-email" class="error">Please enter a valid email address.</div>
         </div>
-<div style="margin-top:12px;">
-  <label for="company">Company name (if applicable)</label>
-  <input id="company" name="company" type="text" placeholder="e.g., FruveTech Pvt. Ltd.">
-  <div class="small">Enter your organization or company name (optional).</div>
-</div>
+
+        <div style="margin-top:12px;">
+          <label for="company">Company name (if applicable)</label>
+          <input id="company" name="company" type="text" placeholder="e.g., FruveTech Pvt. Ltd.">
+          <div class="small">Enter your organisation or company name (optional).</div>
+        </div>
+
+        <!-- Delivery address -->
         <div style="margin-top:12px;">
           <label for="address">Delivery address <span style="color:var(--danger)">*</span></label>
           <textarea id="address" name="address" rows="3" required></textarea>
           <div id="err-address" class="error">Please enter the delivery address.</div>
         </div>
 
+        <!-- Quantity + Notes -->
         <div class="row" style="margin-top:12px;">
           <div class="col">
             <label for="sachetQty">Quantity required (number of sachets) <span style="color:var(--danger)">*</span></label>
             <input id="sachetQty" name="sachetQty" type="number" min="1" step="1" placeholder="e.g., 50" required>
             <div id="err-qty" class="error">Please specify the quantity required.</div>
+            <div class="small">Enter the total number of sachets you require. We will confirm final quantities in follow-up.</div>
           </div>
-         
-        </div>
 
           <div class="col">
             <label for="notes">Additional notes</label>
@@ -85,12 +88,14 @@
           </div>
         </div>
 
+        <!-- Terms -->
         <div class="checkbox">
           <input id="terms" name="terms" type="checkbox" required>
           <label for="terms" style="font-weight:700">I confirm that a 50% advance payment will be made to secure the order.</label>
         </div>
         <div id="err-terms" class="error">You must acknowledge the payment requirement to proceed.</div>
 
+        <!-- CTA -->
         <div class="cta-row">
           <button type="submit" class="primary">Submit order request</button>
           <button type="button" class="secondary" id="resetBtn">Reset</button>
@@ -107,51 +112,80 @@
 
   <script>
     (function(){
-      const produceType=document.getElementById('produceType');
-      const otherProduceWrap=document.getElementById('otherProduceWrap');
-      const orderForm=document.getElementById('orderForm');
-      const sizeRadios=document.getElementsByName('sachetSize');
-      const customWrap=document.getElementById('customSachetWrap');
-      const usageDate=document.getElementById('usageDate');
-      const response=document.getElementById('response');
-      const resetBtn=document.getElementById('resetBtn');
-      const today=new Date().toISOString().split('T')[0];
-      usageDate.setAttribute('min',today);
+      const orderForm = document.getElementById('orderForm');
+      const response = document.getElementById('response');
+      const resetBtn = document.getElementById('resetBtn');
 
-      produceType.addEventListener('change',()=>{otherProduceWrap.style.display=produceType.value==='Other'?'block':'none';});
-      function onSachetChange(){const s=[...sizeRadios].find(r=>r.checked);customWrap.style.display=s&&s.value==='custom'?'block':'none';}
-      [...sizeRadios].forEach(r=>r.addEventListener('change',onSachetChange));
-      function showError(id,show,msg){const el=document.getElementById(id);if(!el)return;el.style.display=show?'block':'none';if(msg)el.textContent=msg;}
+      function showError(id, show, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = show ? 'block' : 'none';
+        if (msg) el.textContent = msg;
+      }
 
-      orderForm.addEventListener('submit',e=>{
+      orderForm.addEventListener('submit', function(e){
         e.preventDefault();
-        ['err-name','err-phone','err-email','err-address','err-qty','err-produce','err-sachet','err-terms'].forEach(id=>showError(id,false));
-        let valid=true;
-        const name=document.getElementById('fullName').value.trim();
-        const phone=document.getElementById('phone').value.trim();
-        const email=document.getElementById('email').value.trim();
-        const address=document.getElementById('address').value.trim();
-        const qty=+document.getElementById('sachetQty').value;
-        const produce=produceType.value;
-        const sachet=[...sizeRadios].find(r=>r.checked);
-        const terms=document.getElementById('terms').checked;
-        if(!name){showError('err-name',true);valid=false;}
-        if(!phone||!/^\+?\d[\d\s-]{6,}$/.test(phone)){showError('err-phone',true);valid=false;}
-        if(!email||!/^\S+@\S+\.\S+$/.test(email)){showError('err-email',true);valid=false;}
-        if(!address){showError('err-address',true);valid=false;}
-        if(!qty){showError('err-qty',true);valid=false;}
-        if(!produce){showError('err-produce',true);valid=false;}
-        if(!sachet){showError('err-sachet',true);valid=false;}
-        if(!terms){showError('err-terms',true);valid=false;}
-        if(!valid)return;
-        response.style.display='block';
-        response.innerHTML="<p><strong>Thank you. Your request has been received.</strong></p><p class='muted'>We will contact you within 24–48 hours with a quotation and payment details.</p>";
-        setTimeout(()=>window.location.href='thank-you.html',1400);
+
+        // clear old errors
+        ['err-name','err-phone','err-email','err-address','err-qty','err-terms'].forEach(id => showError(id, false));
+
+        // gather inputs
+        const name = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const qty = Number(document.getElementById('sachetQty').value || 0);
+        const terms = document.getElementById('terms').checked;
+
+        // basic validation
+        let valid = true;
+        if (!name) { showError('err-name', true); valid = false; }
+        if (!phone || !/^\+?\d[\d\s-]{6,}$/.test(phone)) { showError('err-phone', true, 'Enter a valid phone (e.g., +91 98765 43210)'); valid = false; }
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) { showError('err-email', true); valid = false; }
+        if (!address) { showError('err-address', true); valid = false; }
+        if (!qty || qty < 1) { showError('err-qty', true); valid = false; }
+        if (!terms) { showError('err-terms', true); valid = false; }
+
+        if (!valid) {
+          response.style.display = 'none';
+          const firstErr = document.querySelector('.error[style*="block"]');
+          if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Build payload (developer: replace with actual POST to backend)
+        const payload = {
+          fullName: name,
+          phone,
+          email,
+          company: document.getElementById('company')?.value?.trim() || '',
+          deliveryAddress: address,
+          sachetQuantity: qty,
+          notes: document.getElementById('notes')?.value?.trim() || ''
+        };
+
+        // console log (for developer) - replace with fetch POST to server
+        console.info('Order payload =>', payload);
+
+        // friendly acknowledgement
+        response.style.display = 'block';
+        response.innerHTML = "<p><strong>Thank you. Your request has been received.</strong></p><p class='muted'>We will contact you within 24–48 hours with a quotation and payment details.</p>";
+
+        // clear form
+        orderForm.reset();
+
+        // small delay so user sees message, then redirect to thank-you page
+        setTimeout(function(){
+          window.location.href = 'thank-you.html';
+        }, 1200);
       });
 
-      resetBtn.addEventListener('click',()=>{orderForm.reset();otherProduceWrap.style.display='none';customWrap.style.display='none';response.style.display='none';});
+      resetBtn.addEventListener('click', function(){
+        orderForm.reset();
+        response.style.display = 'none';
+        ['err-name','err-phone','err-email','err-address','err-qty','err-terms'].forEach(id => showError(id,false));
+      });
     })();
   </script>
 </body>
 </html>
-
